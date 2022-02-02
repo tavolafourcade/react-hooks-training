@@ -27,22 +27,43 @@ const Header = () => {
 }
 
 const App = () => {
-  const [ isActive, setIsActive ] = useState(false)
+  const [ state, setState ] = useState({
+    clicks: 0,
+    title: ''
+  })
 
-  const toggle = () => {
-    setIsActive(!isActive)
+  const mergeState = (nextState) => {
+    setState({
+      ...state,
+      ...nextState
+    })
   }
 
+  const addClicks = () => {
+    mergeState({
+      clicks: state.clicks + 1
+    })
+  }
+
+  const handleInput = (e) => {
+    const title = e.target.value
+    mergeState({
+      title
+    })
+  }
   return (
     <div>
-      {
-        isActive && <Header/>
-      }
-      <button onClick={toggle}>
-        {
-          isActive ? 'Desactivar' : 'Activar'
-        }
+      <Header/>
+      <input
+        type='text'
+        value={state.title}
+        onChange={handleInput}
+        >
+      </input>
+      <button onClick={addClicks}>
+          Clicks ({ state.clicks })
       </button>
+      <h3>{state.title}</h3>
     </div>
   )
 }
