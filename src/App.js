@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 
 const Header = () => {
   const styles = {
@@ -29,6 +29,18 @@ const Header = () => {
 const App = () => {
   const [ clicks, setClicks ] = useState(0)
   const [ title, setTitle ] = useState('')
+
+  useEffect(()=> {
+    //componentDidMount
+    //componentDidUpdate
+    console.log('Dentro de useEffect', clicks)
+    console.log('%c--------------------', 'color: green');
+
+    return () => {
+      //componentWillUnmount
+      console.log('Return de useEffect', clicks);
+    }
+  })
 
   const addClicks = () => {
     setClicks(clicks + 1)
