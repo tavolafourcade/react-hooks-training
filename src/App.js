@@ -27,43 +27,29 @@ const Header = () => {
 }
 
 const App = () => {
-  const [ state, setState ] = useState({
-    clicks: 0,
-    title: ''
-  })
-
-  const mergeState = (nextState) => {
-    setState({
-      ...state,
-      ...nextState
-    })
-  }
+  const [ clicks, setClicks ] = useState(0)
+  const [ title, setTitle ] = useState('')
 
   const addClicks = () => {
-    mergeState({
-      clicks: state.clicks + 1
-    })
+    setClicks(clicks + 1)
   }
 
   const handleInput = (e) => {
-    const title = e.target.value
-    mergeState({
-      title
-    })
+    setTitle(e.target.value)
   }
   return (
     <div>
       <Header/>
       <input
         type='text'
-        value={state.title}
+        value={title}
         onChange={handleInput}
         >
       </input>
       <button onClick={addClicks}>
-          Clicks ({ state.clicks })
+          Clicks ({ clicks })
       </button>
-      <h3>{state.title}</h3>
+      <h3>{title}</h3>
     </div>
   )
 }
