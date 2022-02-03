@@ -27,29 +27,34 @@ const Header = () => {
 }
 
 const App = () => {
-  const [ mouseX, setMouseX ] = useState(0)
-  const [ mouseY, setMouseY ] = useState(0)
+  const [ num, setNum ] = useState(0)
+  const [ emoji, setEmoji ] = useState('🤓')
 
-
-  const handleMove = (e) => {
-    // Storing the coursor coordenates
-    setMouseX(e.clientX)
-    setMouseY(e.clientY)
-
-  }
   useEffect(()=> {
-    window.addEventListener('mouseover', handleMove)
-
-    return () => {
-      window.removeEventListener('mouseover', handleMove)
-
-    }
+    alert('useEffect')
   })
+
+  const addClicks = () => {
+    setNum(num + 1)
+  }
+
+  const toggleEmoji = () => {
+    const nextEmoji = emoji === '🤓' ? '🥳' : '🤓'
+    setEmoji(nextEmoji)
+  }
 
   return (
     <div>
       <Header/>
-      <h1>X: {mouseX}, Y: {mouseY}</h1>
+      <button onClick={addClicks}>
+          ADD ({ num })
+      </button>
+      <button onClick={toggleEmoji}>
+        Alternar Emoji
+      </button>
+      <h1>
+        { emoji }
+      </h1>
     </div>
   )
 }
