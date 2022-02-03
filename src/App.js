@@ -1,19 +1,37 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useContext } from 'react'
 
-const Nieto = () => (
-  <MyContext.Consumer>
-    {
-      (context) => (
-        <div>
-          <p>Nieto {context.num}</p>
-          <button onClick={context.addNum}>
-            Nieto Dispatcher
-          </button>
-        </div>
-      )
-    }
-  </MyContext.Consumer>
-)
+// Consumir context de forma tradiciona
+// const Nieto = () => (
+//   <MyContext.Consumer>
+//     {
+//       (context) => (
+//         <div>
+//           <p>Nieto {context.num}</p>
+//           <button onClick={context.addNum}>
+//             Nieto Dispatcher
+//           </button>
+//         </div>
+//       )
+//     }
+//   </MyContext.Consumer>
+// )
+
+// { Provider, Consumer }
+const MyContext = createContext()
+
+const Nieto = () => {
+  const {num,addNum} = useContext(MyContext)
+  return (
+    <div>
+      <p>
+        Nieto {num}
+      </p>
+      <button onClick={addNum}>
+        Nieto Dispatcher
+      </button>
+    </div>
+  )
+}
 
 const Hijo = () => (
   <div>
@@ -21,9 +39,6 @@ const Hijo = () => (
     <Nieto />
   </div>
 )
-
-// { Provider, Consumer }
-const MyContext = createContext()
 
 const App = () => {
   const [ num, setNum ] = useState(0)
