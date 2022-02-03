@@ -27,67 +27,31 @@ const Header = () => {
 }
 
 const App = () => {
-  const [ clicks, setClicks ] = useState(0)
-  const [ title, setTitle ] = useState('')
+  const [ mouseX, setMouseX ] = useState(0)
+  const [ mouseY, setMouseY ] = useState(0)
 
+
+  const handleMove = (e) => {
+    // Storing the coursor coordenates
+    setMouseX(e.clientX)
+    setMouseY(e.clientY)
+
+  }
   useEffect(()=> {
-    //componentDidMount
-    //componentDidUpdate
-    console.log('Dentro de useEffect', clicks)
-    console.log('%c--------------------', 'color: green');
+    window.addEventListener('mouseover', handleMove)
 
     return () => {
-      //componentWillUnmount
-      console.log('Return de useEffect', clicks);
+      window.removeEventListener('mouseover', handleMove)
+
     }
   })
 
-  const addClicks = () => {
-    setClicks(clicks + 1)
-  }
-
-  const handleInput = (e) => {
-    setTitle(e.target.value)
-  }
   return (
     <div>
       <Header/>
-      <input
-        type='text'
-        value={title}
-        onChange={handleInput}
-        >
-      </input>
-      <button onClick={addClicks}>
-          Clicks ({ clicks })
-      </button>
-      <h3>{title}</h3>
+      <h1>X: {mouseX}, Y: {mouseY}</h1>
     </div>
   )
 }
-
-// class App extends Component {
-//   state = {
-//     clicks: 0
-//   }
-
-//   addClicks = () => {
-//     this.setState(state => ({
-//       clicks: state.clicks + 1
-//     }))
-//   }
-
-//   render () {
-//     const { clicks } = this.state
-//     return (
-//       <div>
-//         <Header />
-//         <button onClick={this.addClicks}>
-//           Clicks ({ clicks })
-//         </button>
-//       </div>
-//     )
-//   }
-// }
 
 export default App
