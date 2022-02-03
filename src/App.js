@@ -32,7 +32,7 @@ const App = () => {
 
   useEffect(()=> {
     alert('useEffect')
-  })
+  },[])
 
   const addClicks = () => {
     setNum(num + 1)
