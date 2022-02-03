@@ -1,28 +1,45 @@
-import React, { Component, useEffect, useState, useLayoutEffect } from 'react'
+import React, { createContext, useState } from 'react'
+
+const Nieto = () => (
+  <MyContext.Consumer>
+    {
+      (context) => (
+        <div>
+          <p>Nieto {context.num}</p>
+          <button onClick={context.addNum}>
+            Nieto Dispatcher
+          </button>
+        </div>
+      )
+    }
+  </MyContext.Consumer>
+)
+
+const Hijo = () => (
+  <div>
+    <p>Hijo</p>
+    <Nieto />
+  </div>
+)
+
+// { Provider, Consumer }
+const MyContext = createContext()
 
 const App = () => {
-  const [ count, setCount ] = useState(0)
-
-  useEffect(()=> {
-    console.log('useEffect1');
-  },[count])
-
-  useEffect(()=> {
-    console.log('useEffect2');
-  },[count])
-
-  useLayoutEffect(()=> {
-    console.log('useLayoutEffect 1');
-  },[count])
-
-  useLayoutEffect(()=> {
-    console.log('useLayoutEffect 2');
-  },[count])
-
-  const add = () => setCount(count+1)
+  const [ num, setNum ] = useState(0)
+  const addNum = () => setNum(num+1)
   return (
-    <div>
-    </div>
+    <MyContext.Provider value={{
+      num,
+      addNum
+    }}>
+      <div>
+        <button onClick={addNum}>
+          App ( {num})
+        </button>
+        <Hijo/>
+      </div>
+    </MyContext.Provider>
   )
 }
 
