@@ -7,10 +7,15 @@ const App = () => {
   const entrada = useRef()
 
   useEffect(() => {
-    // Products request
-    fetch('https://universidad-react-api-test.luxfenix.vercel.app/products?name=' + name)
-    .then(res => res.json())
-    .then(data => setProducts(data.products))
+    //debounce
+    setTimeout(() => {
+      if (name === entrada.current.value) {
+        // Products request
+        fetch('https://universidad-react-api-test.luxfenix.vercel.app/products?name=' + name)
+        .then(res => res.json())
+        .then(data => setProducts(data.products))
+      } 
+    },400)
   },[name])
 
   const handleInput = (e) => {
