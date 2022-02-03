@@ -1,30 +1,27 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useEffect, useState, useLayoutEffect } from 'react'
 
 const App = () => {
-  const [ users, setUsers ] = useState([])
-  const [ isFetching, setIsFetching ] = useState(true)
-
+  const [ count, setCount ] = useState(0)
 
   useEffect(()=> {
-    // We transform the API response to JSON
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then(res => res.json())
-    .then(users => {
-      setUsers(users)
-      setIsFetching(false)
-    })
-  },[])
+    console.log('useEffect1');
+  },[count])
 
+  useEffect(()=> {
+    console.log('useEffect2');
+  },[count])
+
+  useLayoutEffect(()=> {
+    console.log('useLayoutEffect 1');
+  },[count])
+
+  useLayoutEffect(()=> {
+    console.log('useLayoutEffect 2');
+  },[count])
+
+  const add = () => setCount(count+1)
   return (
     <div>
-      {isFetching && <h1>Cargando...</h1>}
-      <ul>
-        { users.map(user => (
-          <li key={user.id}>
-            {user.name}
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }
