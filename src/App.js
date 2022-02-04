@@ -1,67 +1,38 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useCallback } from 'react'
 
-// React.memo()
-const Counter = memo(({ count }) => {
-  console.log('%cRender <Counter />', 'color:blue');
-  return (
-    <h1>
-      { count }
-    </h1>
-  )
-})
+const getRandomColor = () => '#' + Math.random().toString(16).slice(2,8)
 
-const Title = memo(({ text }) => {
-  console.log('%cRender <Title />', 'color:orangered');
-  return (
-    <h1>
-      { text }
-    </h1>
-  )
-})
+const Button = memo(({callback, children}) => {
 
-const TitleNested = memo(({ info }) => {
-  console.log('%cRender <TitleNested />', 'color:purple');
-  return (
-    <h1>
-      { info.text }
-    </h1>
-  )
-},
-  // Algoritmo de diferenciación
-  (prevProps, nextProps)=> {
-    //console.log(prevProps, nextProps);
-    // Si retorna true no se va a renderizar: cuando text es igual
-    // Si retorna false se va a renderizar: cuando text cambió
-    return prevProps.info.text === nextProps.info.text
+  const styles= {
+    padding: '1em',
+    fontSize: '20px',
+    background: getRandomColor()
   }
-)
+
+  return (
+    <button style={styles} onClick={callback}>
+      { children }
+    </button>
+  )
+  
+})
 
 const App = () => {
-  const [ title, setTitle ] = useState('')
-  const [ count, setCount ] = useState(0)
+  const [ a, setA ] = useState(0)
 
-  const handleInput = (e) => {
-    setTitle(e.target.value)
-  }
-
-  const handleAdd = () => {
-    setCount(count + 1)
-  }
+  const incrementA = useCallback(() => {
+    setA(a=> a + 1)
+  }, [])
 
   return (
       <div>
-        <input 
-          type='text'
-          onChange={handleInput}
-          />
-          <button onClick={handleAdd}>
-            Add
-          </button>
-          <Counter count={count}/>
-          <Title text={title} />
-          <TitleNested info={{
-            text: title
-          }} />
+        <Button callback={incrementA}>
+          Increment A
+        </Button>
+        <h1>
+          a:  { a }
+        </h1>
       </div>
   )
 }
