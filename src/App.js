@@ -1,40 +1,46 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
+
+const Counter = ({ count }) => {
+  console.log('%cRender <Counter />', 'color:blue');
+  return (
+    <h1>
+      { count }
+    </h1>
+  )
+}
+
+const Title = ({ text }) => {
+  console.log('%cRender <Title />', 'color:orangered');
+  return (
+    <h1>
+      { text }
+    </h1>
+  )
+}
 
 const App = () => {
-  const [ name, setName ] = useState('')
-  const [ products, setProducts ] = useState([])
-
-  const entrada = useRef()
-
-  useEffect(() => {
-    //debounce
-    setTimeout(() => {
-      if (name === entrada.current.value) {
-        // Products request
-        fetch('https://universidad-react-api-test.luxfenix.vercel.app/products?name=' + name)
-        .then(res => res.json())
-        .then(data => setProducts(data.products))
-      } 
-    },400)
-  },[name])
+  const [ title, setTitle ] = useState('')
+  const [ count, setCount ] = useState(0)
 
   const handleInput = (e) => {
-    setName(e.target.value)
+    setTitle(e.target.value)
   }
+
+  const handleAdd = () => {
+    setCount(count + 1)
+  }
+
   return (
       <div>
         <input 
           type='text'
           onChange={handleInput}
-          ref={entrada}
           />
-          <ul>
-            {products.map( product => (
-              <li key={product.id}>
-                {product.name}
-              </li>
-            ))}
-          </ul>
+          <button onClick={handleAdd}>
+            Add
+          </button>
+          <Counter count={count}/>
+          <Title text={title} />
       </div>
   )
 }
